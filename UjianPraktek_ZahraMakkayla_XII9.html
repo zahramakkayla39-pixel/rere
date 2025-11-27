@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semua Dirayakan ♡</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body, html {
+            height: 100%;
+            overflow: hidden;
+            background-color: #B0E0E6;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        /* Full-screen cake */
+        #cake-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('uiui.jpg') center/cover no-repeat;
+            filter: brightness(1.1) contrast(1.05);
+            z-index: 1;
+        }
+
+        /* Overlay agar tulisan tetap terbaca */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(176, 224, 230, 0.45); /* biru muda transparan */
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #FFB6C1;
+            text-shadow: 0 0 15px rgba(255,182,193,0.8);
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            animation: glow 2s infinite alternate;
+        }
+        p {
+            font-size: 1.8rem;
+            max-width: 800px;
+            margin: 20px;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px #FFB6C1; }
+            to { text-shadow: 0 0 40px #FF69B4, 0 0 60px #FFB6C1; }
+        }
+
+        .btn-custom {
+            background: #e74961;
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            box-shadow: 0 8px 20px rgba(255,182,193,0.6);
+            transition: all 0.3s;
+        }
+        .btn-custom:hover {
+            transform: scale(1.1);
+            background: #FF69B4;
+        }
+
+        /* Animasi mengambang */
+        .floating {
+            position: absolute;
+            font-size: 3rem;
+            animation: float 6s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 3;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #eb8493;
+            animation: confetti-fall linear infinite;
+            z-index: 3;
+        }
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .heart {
+            color: #e62b88;
+            animation-duration: 8s;
+        }
+        .balloon {
+            animation-duration: 10s;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background kue full screen -->
+    <div id="cake-bg"></div>
+
+    <!-- Overlay + teks -->
+    <div class="overlay">
+        <h1>Selamat Ulang Tahun Sayang ♡</h1>
+        <p>Setiap detik bersamamu adalah kado terindah. Hari ini kita rayakan usiamu yang baru dengan penuh cinta dan tawa!</p>
+        <a href="slide2.html" class="btn btn-custom mt-4">Lanjutkan Kejutan</a>
+    </div>
+
+    <!-- Audio instrumen romantis -->
+    <audio autoplay loop>
+        <source src="celebriamo-insieme-442546.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- JavaScript untuk animasi mengambang -->
+    <script>
+        // Balon, hati, dan confetti
+        const symbols = ['♡', '♥', '✨', '🎈', '🎉', '🌸', '💕', ];
+        
+        function createFloating() {
+            const el = document.createElement('div');
+            el.className = 'floating';
+            el.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.top = Math.random() * 100 + 'vh';
+            el.style.animationDelay = Math.random() * 5 + 's';
+            document.body.appendChild(el);
+
+            setTimeout(() => el.remove(), 12000);
+        }
+
+        function createConfetti() {
+            const c = document.createElement('div');
+            c.className = 'confetti';
+            c.style.left = Math.random() * 100 + 'vw';
+            c.style.backgroundColor = Math.random() > 0.5 ? '#FFB6C1' : '#B0E0E6';
+            c.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.body.appendChild(c);
+
+            setTimeout(() => c.remove(), 5000);
+        }
+
+        // Jalankan terus-menerus
+        setInterval(createFloating, 800);
+        setInterval(createConfetti, 200);
+
+        // Tambah beberapa di awal biar langsung ramai
+        for(let i = 0; i < 20; i++) {
+            setTimeout(createFloating, i * 300);
+            setTimeout(createConfetti, i * 150);
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

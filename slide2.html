@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiup Lilin Bareng ♡</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body, html { 
+            height: 100%; 
+            margin: 0; 
+            background: linear-gradient(135deg, #B0E0E6, #FFB6C1);
+            overflow: hidden;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            color: #fff;
+        }
+        .container {
+            position: relative;
+            z-index: 10;
+            padding-top: 10vh;
+        }
+        h1 { font-size: 4rem; text-shadow: 0 0 20px #FF69B4; }
+        .cake {
+            width: 320px;
+            height: 320px;
+            margin: 30px auto;
+            position: relative;
+        }
+        .candle {
+            position: absolute;
+            width: 12px;
+            height: 50px;
+            background: linear-gradient(#fff, #ffeb3b);
+            bottom: 180px;
+            border-radius: 6px 6px 0 0;
+        }
+        .flame {
+            position: absolute;
+            width: 16px;
+            height: 24px;
+            background: radial-gradient(#ffeb3b, #ff5722);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            top: -20px;
+            left: -2px;
+            animation: flicker 0.8s infinite alternate;
+        }
+        @keyframes flicker {
+            0% { transform: scale(1)   rotate(-2deg); }
+            100% { transform: scale(1.1) rotate(2deg); }
+        }
+        .candle.off .flame { display: none; }
+        .candle.off { background: #888; }
+
+        #countdown {
+            font-size: 8rem;
+            font-weight: bold;
+            margin: 40px 0;
+            opacity: 0;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        #wish-text {
+            font-size: 2rem;
+            margin: 40px;
+            display: none;
+        }
+
+        .paper {
+            background: rgba(255,255,255,0.95);
+            color: #FF69B4;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            margin: 30px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: none;
+            animation: pop 1s;
+        }
+        @keyframes pop {
+            0% { transform: scale(0) rotate(-10deg); }
+            100% { transform: scale(1) rotate(0); }
+        }
+
+        .btn-custom {
+            background: #FF69B4;
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            margin-top: 20px;
+        }
+        .btn-custom:hover { background: #FF1493; transform: scale(1.1); }
+
+        /* Confetti */
+        .confetti { position: absolute; width: 10px; height: 10px; background: #FFB6C1; animation: fall linear infinite; }
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Lagu Happy Birthday otomatis -->
+    <audio autoplay>
+        <source src="celebriamo-insieme-442546.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <h1>Tiup Lilinnya Yuk Sayang! ♡</h1>
+        <div class="cake" id="cake">
+            <!-- 7 Lilin -->
+            <div class="candle" style="left: 60px;"><div class="flame"></div></div>
+            <div class="candle" style="left: 100px;"><div class="flame"></div></div>
+            <div class="candle" style="left: 140px;"><div class="flame"></div></div>
+            <div class="candle" style="left: 180px;"><div class="flame"></div></div>
+            <div class="candle" style="left: 220px;"><div class="flame"></div></div>
+            <div class="candle" style="left: 260px;"><div class="flame"></div></div>
+            <div class="candle" style="left: 300px;"><div class="flame"></div></div>
+        </div>
+
+        <p id="wish-text">Yuu tiup lilinnya… ayo merem dulu, ucapin make a wish-nya dulu ya ♡</p>
+        <div id="countdown"></div>
+
+        <div class="paper" id="paper">
+            <h2>Selamat Ulang Tahun Sayangku!</h2>
+            <p>Semoga semua impianmu terkabul malam ini. Aku bangga dan bersyukur punya kamu di hidupku. I love you forever! ♡</p>
+            <button class="btn btn-custom" onclick="document.getElementById('photoBtn').style.display='block'; document.getElementById('paper').style.display='none';">Yuk Foto Dulu</button>
+        </div>
+
+        <a href="camera.html" class="btn btn-custom" id="photoBtn" style="display:none;">Yuk Foto Dulu 📸</a>
+    </div>
+
+    <script>
+        // Tampilkan teks tiup lilin setelah 2 detik
+        setTimeout(() => {
+            document.getElementById('wish-text').style.display = 'block';
+        }, 2000);
+
+        // Mulai hitung mundur setelah 5 detik
+        setTimeout(startCountdown, 5000);
+
+        function startCountdown() {
+            let count = 10;
+            const cd = document.getElementById('countdown');
+            cd.style.opacity = 1;
+
+            const interval = setInterval(() => {
+                cd.textContent = count;
+                count--;
+                if (count < 0) {
+                    clearInterval(interval);
+                    cd.textContent = "Horeee!!!";
+                    setTimeout(blowCandles, 1000);
+                }
+            }, 1000);
+        }
+
+        function blowCandles() {
+            // Matikan semua lilin
+            document.querySelectorAll('.candle').forEach(c => c.classList.add('off'));
+            // Confetti party!
+            for(let i = 0; i < 150; i++) {
+                const c = document.createElement('div');
+                c.classList.add('confetti');
+                c.style.left = Math.random() * 100 + 'vw';
+                c.style.background = Math.random() > 0.5 ? '#FFB6C1' : '#B0E0E6';
+                c.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 5000);
+            }
+            // Muncul kertas ucapan
+            setTimeout(() => {
+                document.getElementById('paper').style.display = 'block';
+            }, 1500);
+        }
+    </script>
+
+</body>
+</html>
